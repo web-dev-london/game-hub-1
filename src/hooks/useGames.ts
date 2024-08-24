@@ -3,6 +3,8 @@ import { GameQuery } from "../App";
 import APIClient from "../services/api-client";
 import { FetchResponse } from "../services/api-client";
 import { Platform } from "./usePlatforms";
+import { CACHE_KEY_GAMES } from "../services/constants";
+import ms from "ms";
 
 
 export interface Game {
@@ -31,7 +33,7 @@ const apiClient = new APIClient<Game>("/games");
 }) */
 
 const useGames = (gameQuery: GameQuery) => useInfiniteQuery<FetchResponse<Game>, Error>({
-    queryKey: ["games", gameQuery],
+    queryKey: [CACHE_KEY_GAMES, gameQuery],
     queryFn: ({ pageParam = 1 }) => apiClient.get(
         {
             params: {
@@ -47,7 +49,7 @@ const useGames = (gameQuery: GameQuery) => useInfiniteQuery<FetchResponse<Game>,
         return lastPage.next ? allPages.length + 1 : undefined
     },
 
-    staleTime: 24 * 60 * 60 * 1000, // 24 hours
+    staleTime: ms("24h"), // 24 hours
 })
 
 export default useGames;
