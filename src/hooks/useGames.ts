@@ -1,10 +1,9 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { GameQuery } from "../App";
-import APIClient from "../services/api-client";
-import { FetchResponse } from "../services/api-client";
-import { Platform } from "./usePlatforms";
-import { CACHE_KEY_GAMES } from "../services/constants";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import ms from "ms";
+import APIClient, { FetchResponse } from "../services/api-client";
+import { CACHE_KEY_GAMES } from "../services/constants";
+import useGameQueryStore from "../store";
+import { Platform } from "./usePlatforms";
 
 
 export interface Game {
@@ -32,24 +31,28 @@ const apiClient = new APIClient<Game>("/games");
     )
 }) */
 
-const useGames = (gameQuery: GameQuery) => useInfiniteQuery<FetchResponse<Game>, Error>({
-    queryKey: [CACHE_KEY_GAMES, gameQuery],
-    queryFn: ({ pageParam = 1 }) => apiClient.get(
-        {
-            params: {
-                genres: gameQuery.genreId,
-                parent_platforms: gameQuery.platformId,
-                ordering: gameQuery.sortOrder,
-                search: gameQuery.searchText,
-                page: pageParam
-            }
-        },
-    ),
-    getNextPageParam: (lastPage, allPages) => {
-        return lastPage.next ? allPages.length + 1 : undefined
-    },
+const useGames = () => {
+    const gameQuery = useGameQueryStore(s => s.gameQuery)
 
-    staleTime: ms("24h"), // 24 hours
-})
+    return useInfiniteQuery<FetchResponse<Game>, Error>({
+        queryKey: [CACHE_KEY_GAMES, gameQuery],
+        queryFn: ({ pageParam = 1 }) => apiClient.get(
+            {
+                params: {
+                    genres: gameQuery.genreId,
+                    parent_platforms: gameQuery.platformId,
+                    ordering: gameQuery.sortOrder,
+                    search: gameQuery.searchText,
+                    page: pageParam
+                }
+            },
+        ),
+        getNextPageParam: (lastPage, allPages) => {
+            return lastPage.next ? allPages.length + 1 : undefined
+        },
+
+        staleTime: ms("24h"), // 24 hours
+    })
+}
 
 export default useGames;
