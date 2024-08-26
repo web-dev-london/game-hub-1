@@ -14,7 +14,7 @@ const apiClient = new APIClient<Genre>("/genres");
 
 const useGenres = () => useQuery({
     queryKey: CACHE_KEY_GENRES,
-    queryFn: apiClient.get,
+    queryFn: apiClient.getAll,
     staleTime: ms("24h"), // 24 hours
     initialData: genres
 })

@@ -19,13 +19,18 @@ class APIClient<T> {
     constructor(endpoint: string) {
         this.endpoint = endpoint;
     }
-    get = async (config?: AxiosRequestConfig) => {
+    getAll = async (config?: AxiosRequestConfig) => {
         const response = await axiosInstance.get<FetchResponse<T>>(this.endpoint, config);
         return response.data;
     }
 
     post = async () => {
         const response = await axiosInstance.post<FetchResponse<T>>(this.endpoint);
+        return response.data;
+    }
+
+    get = async (id: number | string) => {
+        const response = await axiosInstance.get<T>(this.endpoint + "/" + id);
         return response.data;
     }
 }
