@@ -1,7 +1,7 @@
 import { Card, CardBody, Heading, HStack, Image, Text } from '@chakra-ui/react'
 import { Clink } from 'clink-react'
 import React from 'react'
-import { Game } from '../hooks/useGames'
+import { Game } from "../entities/Game"
 import getCroppedImageUrl from '../services/image-url'
 import CriticScore from './CriticScore'
 import Emoji from './Emoji'
