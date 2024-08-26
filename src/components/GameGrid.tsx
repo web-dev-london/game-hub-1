@@ -1,15 +1,14 @@
-import { Box, Button, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
+import { Box, Button, SimpleGrid, Spinner, Text } from "@chakra-ui/react";
 import useGames from "../hooks/useGames";
-import useGameQueryStore from "../store";
 import GameCard from "./GameCard";
 import GameCardContainer from "./GameCardContainer";
 import GameCardSkeleton from "./GameCardSkeleton";
 // import InfiniteScroll from "react-infinite-scroll-component";
 
 
-const GameGrid = () => {
 
+const GameGrid = () => {
     const {
         data,
         error,
@@ -46,7 +45,7 @@ const GameGrid = () => {
                 {data?.pages.map((page, index) =>
                     <React.Fragment key={index}>
                         {page.results.map((game) => (
-                            <GameCardContainer key={game.id} >
+                            <GameCardContainer >
                                 <GameCard game={game} />
                             </GameCardContainer>
                         ))}
