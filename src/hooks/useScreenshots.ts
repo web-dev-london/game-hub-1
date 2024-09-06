@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import ms from "ms";
-import Screenshot from "../entities/Screenshot";
 import APIClient from "../services/api-client";
+import { Screenshot, screenshotSchema } from "../validation/validate";
 
 const useScreenshots = (gameId: number) => {
-    const apiClient = new APIClient<Screenshot>(`/games/${gameId}/screenshots`);
+    const apiClient = new APIClient<Screenshot>(`/games/${gameId}/screenshots`, screenshotSchema);
 
     return useQuery({
         queryKey: ["screenshots", gameId],

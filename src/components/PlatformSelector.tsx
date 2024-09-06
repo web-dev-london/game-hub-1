@@ -16,7 +16,6 @@ const PlatformSelector = () => {
 
     if (error) return null;
 
-
     return (
         <>
             <Menu>

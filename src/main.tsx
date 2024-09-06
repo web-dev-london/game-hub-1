@@ -8,7 +8,16 @@ import theme from './theme'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            networkMode: "offlineFirst",
+        },
+        mutations: {
+            networkMode: "offlineFirst",
+        },
+    }
+});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>

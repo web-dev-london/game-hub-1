@@ -1,3 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 form {
-  width: 100%;
+    width: 100%;
+}
+
+.image-slider {
+    width: 100%;
+    height: auto;
+    object-fit: cover !important;
+    display: block !important;
 }
