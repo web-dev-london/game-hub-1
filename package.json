@@ -26,6 +26,7 @@
     "react-router-dom": "^6.10.0",
     "simple-zustand-devtools": "^1.1.0",
     "zod": "^3.22.2",
+    "zod-validation-error": "^3.3.1",
     "zustand": "^4.3.7"
   },
   "devDependencies": {

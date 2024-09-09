@@ -16,8 +16,8 @@ const GameGrid = () => {
         isFetchingNextPage,
         fetchNextPage,
         hasNextPage,
-
     } = useGames();
+
     const skeletons = [1, 2, 3, 4, 5, 6];
 
     if (error) return <Text>{error.message}</Text>;
@@ -32,13 +32,14 @@ const GameGrid = () => {
 
     const listOfGames = data?.pages.map((page, index) =>
         <React.Fragment key={index}>
-            {page.results.map((game) => (
-                <GameCardContainer key={game.id} >
+            {page.results.map((game, index) => (
+                <GameCardContainer key={index} >
                     <GameCard game={game} />
                 </GameCardContainer>
             ))}
         </React.Fragment>
     )
+
 
     return (
         <Box padding={'10px'}>
@@ -55,7 +56,7 @@ const GameGrid = () => {
                     onClick={() => fetchNextPage()}
                     marginY={5}
                 >
-                    {isFetchingNextPage ? 'Loading more...' : 'Load More'}
+                    {isFetchingNextPage ? 'Loading ...' : 'Load More'}
                 </Button>
             )}
         </Box>

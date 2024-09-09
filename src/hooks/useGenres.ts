@@ -9,7 +9,7 @@ import { genreSchema } from "../validation/validate";
 const apiClient = new APIClient<Genre>("/genres", genreSchema);
 
 const useGenres = () => useQuery({
-    queryKey: CACHE_KEY_GENRES,
+    queryKey: [CACHE_KEY_GENRES],
     queryFn: apiClient.getAll,
     staleTime: ms("24h"), // 24 hours
     initialData: genres,

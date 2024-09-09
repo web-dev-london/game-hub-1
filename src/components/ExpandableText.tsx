@@ -17,19 +17,21 @@ const ExpandableText = ({ children }: Props) => {
     const summary = children.substring(0, limit).concat('...');
 
     return (
-        <Text >
-            {isExpanded ? children : summary}
-            <Text
-                onClick={() => setIsExpanded(!isExpanded)}
-                cursor={'pointer'}
-                fontWeight={'bold'}
-                as="span"
-                color={isExpanded ? 'yellow.500' : 'blue.500'}
-                ml={1}
-            >
-                {isExpanded ? ' Show less' : ' Read more'}
+        <>
+            <Text >
+                {isExpanded ? children : summary}
+                <Text
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    cursor={'pointer'}
+                    fontWeight={'bold'}
+                    as="span"
+                    color={isExpanded ? 'yellow.500' : 'blue.500'}
+                    ml={1}
+                >
+                    {isExpanded ? ' Show less' : ' Read more'}
+                </Text>
             </Text>
-        </Text>
+        </>
     )
 }
 

@@ -1,52 +1,46 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ms from "ms";
-import { Game } from "../validation/validate";
-import APIClient, { FetchResponse } from "../services/api-client";
+import APIClient from "../services/api-client";
 import { CACHE_KEY_GAMES } from "../services/constants";
 import useGameQueryStore from "../store";
-import { gameSchema } from "../validation/validate";
+import { FetchResponse, Game, gameSchema } from "../validation/validate";
 
-
+// Initialize the API client
 const apiClient = new APIClient<Game>("/games", gameSchema);
 
-/* const useGames = (gameQuery: GameQuery) => useQuery<FetchResponse<Game>, Error>({
-    queryKey: ["games", gameQuery],
-    queryFn: () => apiClient.get(
-        {
-            params: {
-                genres: gameQuery.genre?.id,
-                parent_platforms: gameQuery.platform?.id,
-                ordering: gameQuery.sortOrder,
-                search: gameQuery.searchText
-            }
-        }
-    )
-}) */
-
 const useGames = () => {
-    const gameQuery = useGameQueryStore(s => s.gameQuery)
+    ;
+    // to make sure this properly reflects game filters
+    const gameQuery = useGameQueryStore((s) => s.gameQuery);
 
     return useInfiniteQuery<FetchResponse<Game>, Error>({
+        // The cache key changes when gameQuery changes
         queryKey: [CACHE_KEY_GAMES, gameQuery],
-        queryFn: (({ pageParam = 1 }) => {
-            const response = apiClient.getAll({
-                params: {
-                    genres: gameQuery.genreId,
-                    parent_platforms: gameQuery.platformId,
-                    ordering: gameQuery.sortOrder,
-                    search: gameQuery.searchText,
-                    page: pageParam
-                }
+        queryFn: async ({ pageParam = 1 }) => {
+            console.log("Fetching games with:", {
+                genreId: gameQuery.genreId,
+                platformId: gameQuery.platformId,
+                sortOrder: gameQuery.sortOrder,
+                searchText: gameQuery.searchText,
+                page: pageParam
             });
-            return response
-        }),
-        getNextPageParam: (lastPage, allPages) => {
-            return lastPage.next ? allPages.length + 1 : undefined
+            const params = {
+                genres: gameQuery.genreId || undefined,
+                parent_platforms: gameQuery.platformId || undefined,
+                ordering: gameQuery.sortOrder || undefined,
+                search: gameQuery.searchText || undefined,
+                page: pageParam
+            };
+
+            console.log("Fetching games with:", params);
+
+            return apiClient.getAll({ params });
         },
-
-        staleTime: ms("24h"), // 24 hours
-    })
-}
-
+        getNextPageParam: (lastPage, allPages) => {
+            return lastPage.next ? allPages.length + 1 : undefined;
+        },
+        staleTime: ms("24h"), // This means the data stays fresh for 24 hours
+    });
+};
 
 export default useGames;

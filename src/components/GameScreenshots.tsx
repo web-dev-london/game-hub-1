@@ -88,7 +88,6 @@ const GameScreenshots = ({ gameId }: Props) => {
                             <HStack
                                 position={'absolute'}
                                 left={'50%'}
-                                right={'50%'}
                                 bottom={0}
                                 transform={'translate(-50%, -50%)'}
                             >

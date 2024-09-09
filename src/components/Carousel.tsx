@@ -1,7 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
-import { Box, ButtonGroup, Flex, HStack, IconButton, Image } from '@chakra-ui/react'
-import { PropsWithChildren, useState } from 'react'
-import { FetchResponse } from '../services/api-client'
+import { ButtonGroup, HStack, IconButton, Image } from '@chakra-ui/react'
+import { useState } from 'react'
 
 
 interface Props {

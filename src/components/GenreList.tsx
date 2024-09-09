@@ -21,7 +21,7 @@ const GenreList = () => {
 
     if (error) return null;
 
-    if (isLoading) return <Spinner />;
+
 
 
     const listOfGenres = data?.results.map((genre) => (
@@ -54,7 +54,7 @@ const GenreList = () => {
                 Genres
             </Heading>
             <List>
-                {/* {loadingSkeletons} */}
+                {isLoading && <Spinner />}
                 {listOfGenres}
             </List>
         </>
