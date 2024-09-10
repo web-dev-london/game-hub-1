@@ -40,7 +40,6 @@ const GameGrid = () => {
         </React.Fragment>
     )
 
-
     return (
         <Box padding={'10px'}>
             <SimpleGrid

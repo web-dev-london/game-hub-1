@@ -5,7 +5,10 @@ import {
     Image,
     List,
     ListItem,
-    Spinner
+    Skeleton,
+    SkeletonCircle,
+    SkeletonText,
+    Spinner,
 } from "@chakra-ui/react";
 import useGenres from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
@@ -14,14 +17,23 @@ import useGameQueryStore from "../store";
 
 
 const GenreList = () => {
-    const { data, isLoading, error } = useGenres();
+    const { data, error, isFetching } = useGenres();
     const selectedGenreId = useGameQueryStore(s => s.gameQuery.genreId);
     const setSelectedGenreId = useGameQueryStore(s => s.setGenreId);
-
+    const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     if (error) return null;
 
 
+    const loadingSkeletons = isFetching &&
+        skeletons.map((skeleton) => (
+            <ListItem key={skeleton} paddingY="5px">
+                <HStack>
+                    <SkeletonCircle size='10' />
+                    <Skeleton height="16px" width="60px" />
+                </HStack>
+            </ListItem>
+        ))
 
 
     const listOfGenres = data?.results.map((genre) => (
@@ -54,7 +66,7 @@ const GenreList = () => {
                 Genres
             </Heading>
             <List>
-                {isLoading && <Spinner />}
+                {loadingSkeletons}
                 {listOfGenres}
             </List>
         </>

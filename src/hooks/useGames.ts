@@ -25,10 +25,10 @@ const useGames = () => {
                 page: pageParam
             });
             const params = {
-                genres: gameQuery.genreId || undefined,
-                parent_platforms: gameQuery.platformId || undefined,
-                ordering: gameQuery.sortOrder || undefined,
-                search: gameQuery.searchText || undefined,
+                genres: gameQuery.genreId,
+                parent_platforms: gameQuery.platformId,
+                ordering: gameQuery.sortOrder,
+                search: gameQuery.searchText,
                 page: pageParam
             };
 

@@ -74,7 +74,6 @@ export const gameSchema = z.object({
     name: z.string(),
     slug: z.string(),
     background_image: z.string().nullable().optional(),
-    // genres: z.array(genreSchema)
     parent_platforms: z.array(z.object({
         platform: platformSchema
     })),
