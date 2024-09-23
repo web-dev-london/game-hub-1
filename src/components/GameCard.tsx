@@ -1,16 +1,14 @@
 import { Card, CardBody, Heading, HStack, Image } from '@chakra-ui/react'
 import { Clink } from 'clink-react'
-import { GameQuery, Game } from '../validation/validate'
 import getCroppedImageUrl from '../services/image-url'
+import { Game } from '../validation/validate'
 import CriticScore from './CriticScore'
 import Emoji from './Emoji'
 import PlatformIconList from './PlatformIconList'
 
-interface Props {
-    game: Game
-}
 
-const GameCard = ({ game }: Props) => {
+
+const GameCard = ({ game }: { game: Game }) => {
     return (
         <Card >
             <Image src={getCroppedImageUrl(game.background_image || '')} />

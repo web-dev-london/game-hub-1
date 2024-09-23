@@ -15,8 +15,15 @@ const SearchInput = () => {
         <form onSubmit={(event) => {
             event.preventDefault();
             if (ref.current) {
-                setSearchText(ref.current.value);
-                navigate('/');
+                const searchTerm = ref.current.value;
+                if (searchTerm) {
+                    setSearchText(searchTerm);
+                    const params = new URLSearchParams(searchTerm.toString());
+                    params.set("search", searchTerm);
+                    navigate(`/?${params.toString()}`);
+                } else {
+                    navigate("/")
+                }
             }
 
         }}>

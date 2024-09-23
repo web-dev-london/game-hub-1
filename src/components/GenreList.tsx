@@ -10,6 +10,8 @@ import {
     SkeletonText,
     Spinner,
 } from "@chakra-ui/react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 import useGenres from "../hooks/useGenres";
 import getCroppedImageUrl from "../services/image-url";
 import useGameQueryStore from "../store";
@@ -20,9 +22,23 @@ const GenreList = () => {
     const { data, error, isFetching } = useGenres();
     const selectedGenreId = useGameQueryStore(s => s.gameQuery.genreId);
     const setSelectedGenreId = useGameQueryStore(s => s.setGenreId);
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+
     const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     if (error) return null;
+
+    const handleGenreClick = (genreId: number) => {
+        // Update the selected genre in the store
+        setSelectedGenreId(genreId);
+
+        // Update the URL with the selected genreId
+        const params = new URLSearchParams(searchParams);
+        params.set("genreId", genreId.toString()); // Set the genreId in the URL params
+        navigate(`?${params.toString()}`); // Navigate to the new URL with the genreId
+    };
 
 
     const loadingSkeletons = isFetching &&
@@ -49,7 +65,7 @@ const GenreList = () => {
                     whiteSpace="normal"
                     textAlign="left"
                     fontWeight={genre.id === selectedGenreId ? "bold" : "normal"}
-                    onClick={() => setSelectedGenreId(genre.id)}
+                    onClick={() => handleGenreClick(genre.id)}
                     fontSize="md"
                     variant="link"
                 >
@@ -72,5 +88,7 @@ const GenreList = () => {
         </>
     );
 };
+
+
 
 export default GenreList;

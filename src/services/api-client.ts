@@ -31,14 +31,12 @@ class APIClient<T> {
     }
 
     getAll = async (config?: AxiosRequestConfig): Promise<FetchResponse<T>> => {
-
         const response = await axiosInstance.get<unknown>(this.endpoint, config);
         console.log('Raw API Response:', response.data);
         const fetchResponseSchema = defineFetchResponseSchema(this.schema);
         console.log('Fetch Response Schema:', fetchResponseSchema);
 
         return validateResponse(fetchResponseSchema, response.data);
-
     }
 
 

@@ -4,9 +4,9 @@ import { Game, GameDetail, gameDetailSchema } from "../validation/validate";
 import { gameSchema } from "../validation/validate";
 import { CACHE_KEY_GAMES } from "../services/constants";
 
-const apiClient = new APIClient<GameDetail>(`/games`, gameDetailSchema);
+const apiClient = new APIClient(`/games`, gameDetailSchema);
 
-const useGame = (slug: string) => useQuery({
+const useGame = (slug: string) => useQuery<GameDetail>({
     queryKey: [CACHE_KEY_GAMES, slug],
     queryFn: (() => {
         const response = apiClient.get(slug);

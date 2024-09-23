@@ -1,5 +1,6 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { BsChevronDown } from "react-icons/bs";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import usePlatform from "../hooks/usePlatform";
 import usePlatforms from "../hooks/usePlatforms";
 import useGameQueryStore from "../store";
@@ -12,10 +13,21 @@ const PlatformSelector = () => {
     const selectedPlatformId = useGameQueryStore(s => s.gameQuery.platformId);
     const { data, error } = usePlatforms();
     const selectedPlatform = usePlatform(selectedPlatformId);
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
 
     if (error) return null;
 
+
+
+    const handlePlatformClick = (platformId: number) => {
+        // Update the selected platform in the store
+        setSelectedPlatformId(platformId);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('platformId', platformId.toString());
+        navigate(`?${params.toString()}`);
+    }
 
     return (
         <>
@@ -30,7 +42,7 @@ const PlatformSelector = () => {
                 <MenuList>
                     {data?.results.map((platform: Platform) => (
                         <MenuItem
-                            onClick={() => setSelectedPlatformId(platform.id)}
+                            onClick={() => handlePlatformClick(platform.id)}
                             key={platform.id}
                             value={platform.id}
                         >
