@@ -9,10 +9,10 @@ import { Platform } from "../validation/validate";
 
 
 const PlatformSelector = () => {
-  const setSelectedPlatformId = useGameQueryStore(s => s.setPlatformId)
   const selectedPlatformId = useGameQueryStore(s => s.gameQuery.platformId);
-  const { data, error } = usePlatforms();
   const selectedPlatform = usePlatform(selectedPlatformId);
+  const setSelectedPlatformId = useGameQueryStore(s => s.setPlatformId);
+  const { data, error } = usePlatforms();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -20,17 +20,15 @@ const PlatformSelector = () => {
   if (error) return null;
 
 
-
   const handlePlatformClick = (platformId: number) => {
     setSelectedPlatformId(platformId);
     const params = new URLSearchParams(searchParams.toString());
-    params.set('platformId', platformId.toString());
+    params.set('platform', platformId.toString());
     navigate(`?${params.toString()}`);
   }
 
   return (
     <>
-
       <Menu>
         <MenuButton
           as={Button}

@@ -18,7 +18,7 @@ const useGames = () => {
     queryKey: [CACHE_KEY_GAMES, gameQuery],
     queryFn: async ({ pageParam = 1 }) => {
       const params = {
-        genres: gameQuery.genreId,
+        genres: gameQuery.genreSlug,
         parent_platforms: gameQuery.platformId,
         ordering: gameQuery.sortOrder,
         search: gameQuery.searchText,

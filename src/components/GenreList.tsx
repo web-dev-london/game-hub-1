@@ -20,8 +20,8 @@ import useGameQueryStore from "../store";
 
 const GenreList = () => {
   const { data, error, isFetching } = useGenres();
-  const selectedGenreName = useGameQueryStore(s => s.gameQuery.genreName);
-  const setSelectedGenreId = useGameQueryStore(s => s.setGenreName);
+  const selectedGenreSlug = useGameQueryStore(s => s.gameQuery.genreSlug);
+  const setSelectedGenreSlug = useGameQueryStore(s => s.setGenreSlug);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -31,9 +31,9 @@ const GenreList = () => {
   if (error) return null;
 
   const handleGenreClick = (genre: string) => {
-    setSelectedGenreId(genre);
+    setSelectedGenreSlug(genre);
     const params = new URLSearchParams(searchParams);
-    params.set("genre", genre.toString());
+    params.set("genre", genre);
     navigate(`?${params.toString().toLowerCase()}`);
   };
 
@@ -61,8 +61,8 @@ const GenreList = () => {
         <Button
           whiteSpace="normal"
           textAlign="left"
-          fontWeight={genre.name === selectedGenreName ? "bold" : "normal"}
-          onClick={() => handleGenreClick(genre.name)}
+          fontWeight={genre.name === selectedGenreSlug ? "bold" : "normal"}
+          onClick={() => handleGenreClick(genre.slug)}
           fontSize="md"
           variant="link"
         >

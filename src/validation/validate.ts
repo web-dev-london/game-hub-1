@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const gameQuerySchema = z.object({
-  genreName: z.string().optional(),
+  genreSlug: z.string().optional(),
   platformId: z.number().optional(),
   sortOrder: z.string().optional(),
   searchText: z.string().optional(),
@@ -11,7 +11,7 @@ type GameQuery = z.infer<typeof gameQuerySchema>
 const gameQueryStoreSchema = z.object({
   gameQuery: gameQuerySchema,
   setSearchText: z.function().args(z.string()).returns(z.void()),
-  setGenreName: z.function().args(z.string()).returns(z.void()),
+  setGenreSlug: z.function().args(z.string()).returns(z.void()),
   setPlatformId: z.function().args(z.number()).returns(z.void()),
   setSortOrder: z.function().args(z.string()).returns(z.void()),
 })
