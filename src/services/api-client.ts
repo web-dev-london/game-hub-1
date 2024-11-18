@@ -8,7 +8,7 @@ import { FetchResponse } from "../validation/validate";
 const axiosInstance = axios.create({
   baseURL: "https://api.rawg.io/api",
   params: {
-    key: `fe8458d448534be5a17ad3fff0edfd69`,
+    key: import.meta.env.VITE_GAME_API_KEY
   },
 });
 
